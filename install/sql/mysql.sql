@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS `bb_bt_users`;
 DROP TABLE IF EXISTS `bb_bt_user_settings`;
 DROP TABLE IF EXISTS `bb_captcha`;
 DROP TABLE IF EXISTS `bb_categories`;
+DROP TABLE IF EXISTS `bb_chat`;
 DROP TABLE IF EXISTS `bb_config`;
 DROP TABLE IF EXISTS `bb_cron`;
 DROP TABLE IF EXISTS `bb_disallow`;
@@ -481,6 +482,21 @@ CREATE TABLE IF NOT EXISTS `bb_categories` (
 --
 
 INSERT INTO `bb_categories` VALUES (1, 'Ваша первая категория', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `bb_chat`
+--
+
+CREATE TABLE IF NOT EXISTS `bb_chat` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL DEFAULT '0',
+  `text` text NOT NULL,
+  `text_clean` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
