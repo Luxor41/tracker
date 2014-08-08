@@ -68,8 +68,8 @@ $domain_name = (!empty($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : $do
 
 // Version info
 $bb_cfg['tp_version'] = '2.0.9 (RC)';
-$bb_cfg['tp_release_date'] = '30-07-2014';
-$bb_cfg['tp_release_state'] = 'R592';
+$bb_cfg['tp_release_date'] = '07-08-2014';
+$bb_cfg['tp_release_state'] = 'R594b';
 
 // Database
 $charset  = 'utf8';
@@ -239,16 +239,16 @@ $page_cfg['show_torhelp'] = array(
 // Path (trailing slash '/' at the end: XX_PATH - without, XX_DIR - with)
 define('DIR_SEPR', DIRECTORY_SEPARATOR);
 
-define('BB_PATH',       realpath(BB_ROOT)     );  // absolute pathname to the forum root
-define('ADMIN_DIR',     BB_PATH .'/admin/'    );
-define('CACHE_DIR',     BB_PATH .'/cache/'    );
-define('CFG_DIR',       BB_PATH .'/config/'   );
-define('INC_DIR',       BB_PATH .'/includes/' );
-define('LANG_ROOT_DIR', BB_PATH .'/language/' );
-define('LOG_DIR',       BB_PATH .'/log/'      );
-define('TEMPLATES_DIR', BB_PATH .'/templates/');
-define('TRIGGERS_DIR',  BB_PATH .'/triggers/' );
-define('LOCKS_DIR',     BB_PATH .'/locks/'    );
+define('BB_PATH',       realpath(BB_ROOT)      );  // absolute pathname to the forum root
+define('ADMIN_DIR',     BB_PATH .'/admin/'     );
+define('ATTACH_DIR',    BB_PATH .'/attach_mod/');
+define('CACHE_DIR',     BB_PATH .'/cache/'     );
+define('CFG_DIR',       BB_PATH .'/config/'    );
+define('INC_DIR',       BB_PATH .'/includes/'  );
+define('LANG_ROOT_DIR', BB_PATH .'/language/'  );
+define('LOG_DIR',       BB_PATH .'/log/'       );
+define('TEMPLATES_DIR', BB_PATH .'/templates/' );
+define('TRIGGERS_DIR',  BB_PATH .'/triggers/'  );
 
 // URL's
 $bb_cfg['ajax_url']    = 'ajax.php';     #  "http://{$_SERVER['SERVER_NAME']}/ajax.php"

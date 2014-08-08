@@ -1,12 +1,11 @@
 <?php
 
-define('IN_FORUM',   true);
+define('IN_FORUM', true);
 define('BB_SCRIPT', 'download');
-define('IN_SERVICE', true);
 define('NO_GZIP', true);
 define('BB_ROOT',  './');
-require(BB_ROOT ."common.php");
-require(BB_ROOT ."attach_mod/attachment_mod.php");
+require(BB_ROOT .'common.php');
+require(ATTACH_DIR .'attachment_mod.php');
 
 $datastore->enqueue(array(
 	'attach_extensions',

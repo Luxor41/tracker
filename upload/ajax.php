@@ -9,10 +9,14 @@ require('./common.php');
 
 $ajax->init();
 
-// Handle "board disabled via ON/OFF trigger"
-if (file_exists(BB_DISABLED) || $bb_cfg['board_disable'])
+// Exit if board is disabled via ON/OFF trigger or by admin
+if ($bb_cfg['board_disable'])
 {
 	$ajax->ajax_die($lang['BOARD_DISABLE']);
+}
+else if (file_exists(BB_DISABLED))
+{
+	$ajax->ajax_die($lang['BOARD_DISABLE_CRON']);
 }
 
 // Load actions required modules
@@ -34,12 +38,12 @@ switch ($ajax->action)
 	case 'mod_action':
 	case 'change_tor_status':
 	case 'gen_passkey':
-		require(BB_ROOT . 'attach_mod/attachment_mod.php');
+		require(ATTACH_DIR . 'attachment_mod.php');
 		require(INC_DIR . 'functions_torrent.php');
 		break;
 
 	case 'change_torrent':
-		require(BB_ROOT . 'attach_mod/attachment_mod.php');
+		require(ATTACH_DIR . 'attachment_mod.php');
 		require(INC_DIR . 'functions_torrent.php');
 		break;
 
@@ -54,6 +58,10 @@ switch ($ajax->action)
 
 	case 'group_membership':
 		require(INC_DIR . 'functions_group.php');
+		break;
+
+	case 'sitemap';
+		require(INC_DIR .'class.sitemap.php');
 		break;
 }
 
@@ -78,6 +86,7 @@ class ajax_common
 		'change_user_opt'   => array('admin'),
 		'manage_user'       => array('admin'),
 		'manage_admin'      => array('admin'),
+		'sitemap'           => array('admin'),
 
 		'mod_action'        => array('mod'),
 		'topic_tpl'         => array('mod'),
@@ -405,5 +414,10 @@ class ajax_common
 	function chat()
 	{
 		require(AJAX_DIR . 'chat.php');
+	}
+
+	function sitemap()
+	{
+		require(AJAX_DIR .'sitemap.php');
 	}
 }

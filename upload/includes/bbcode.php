@@ -536,7 +536,7 @@ class bbcode
 			'[/size]'    => '</span>',
 			'[/align]'   => '</span>',
 			'[/font]'    => '</span>',
-			'[tab]'      => ' ',
+			'[tab]'      => '&nbsp;&nbsp;&nbsp;&nbsp;',
 			'[br]'       => "\n\n",
 			'[hr]'       => $tpl['hr'],
 			'[b]'        => '<span class="post-b">',

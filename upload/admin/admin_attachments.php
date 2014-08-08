@@ -1,20 +1,18 @@
 <?php
 
-// ACP Header - START
 if (!empty($setmodules))
 {
 	$filename = basename(__FILE__);
-	$module['Attachments']['Manage'] = $filename . '?mode=manage';
-	$module['Attachments']['Special_categories'] = $filename . '?mode=cats';
-	$module['Attachments']['Quota_limits'] = $filename . '?mode=quota';
+	$module['ATTACHMENTS']['MANAGE'] = $filename . '?mode=manage';
+	$module['ATTACHMENTS']['SPECIAL_CATEGORIES'] = $filename . '?mode=cats';
+	$module['ATTACHMENTS']['QUOTA_LIMITS'] = $filename . '?mode=quota';
 	return;
 }
 require('./pagestart.php');
-// ACP Header - END
 
 $error = false;
 
-if ( ($attach_config['upload_dir'][0] == '/') || ( ($attach_config['upload_dir'][0] != '/') && ($attach_config['upload_dir'][1] == ':') ) )
+if (($attach_config['upload_dir'][0] == '/') || (($attach_config['upload_dir'][0] != '/') && ($attach_config['upload_dir'][1] == ':')))
 {
 	$upload_dir = $attach_config['upload_dir'];
 }
@@ -23,7 +21,7 @@ else
 	$upload_dir = '../' . $attach_config['upload_dir'];
 }
 
-include(BB_ROOT .'attach_mod/includes/functions_selects.php');
+include(ATTACH_DIR .'includes/functions_selects.php');
 
 // Check if the language got included
 if (!isset($lang['TEST_SETTINGS_SUCCESSFUL']))
