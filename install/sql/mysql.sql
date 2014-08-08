@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `bb_ads` (
   `ad_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ad_block_ids` varchar(255) NOT NULL DEFAULT '',
   `ad_start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ad_active_days` smallint(6) NOT NULL DEFAULT '0',
+  `ad_finish_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ad_status` tinyint(4) NOT NULL DEFAULT '1',
   `ad_desc` varchar(255) NOT NULL DEFAULT '',
   `ad_html` text NOT NULL,
