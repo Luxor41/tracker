@@ -5,6 +5,7 @@
 <h1>Система управления рекламными материалами</h1>
 &nbsp; {U_LIST} &#0183; {U_ADD}
 </br></br>
+
 <!-- IF LIST_ADS -->
 <table class="forumline">
 	<tr>
@@ -37,7 +38,6 @@
 		<td class="catBottom" colspan="6">&nbsp;</td>
 	</tr>
 </table>
-
 <br>
 <script type="text/javascript">
 	// Delete bonus
@@ -64,10 +64,9 @@
 			<th colspan="2" class="thHead"><b>Добавление нового баннера</b></th>
 		</tr>
 		<tr>
-			<td class="row1" align="right"><b>ID блока</b></td>
+			<td class="row1" align="right"><b>Блок</b></td>
 			<td class="row2">
-				<input type="text" name="ad_block_ids" style="width:150px;">&nbsp;
-				если несколько, то через запятую
+				{AD_ID}&nbsp;новые блоки указать в файле config.php
 			</td>
 		</tr>
 		<tr>
@@ -126,35 +125,13 @@
 		<tr>
 			<td class="row1" align="right"><b>Дата начала:</b></td>
 			<td class="row2">
-				<input type="text" name="ad_start_time" id="f_date_s"  style="width:350px;" value="{AD_START_TIME}">&nbsp;<img src="/misc/calendar/img.gif"  align="absmiddle" id="f_trigger_s" style="cursor: pointer; border: 0" title="Выбор даты с помощью календаря"/>
-				<script type="text/javascript">
-					var cal = Calendar.setup({
-						inputField     :    "f_date_s",     // id of the input field
-						ifFormat       :    "%Y-%m-%d %H:%M",      // format of the input field
-						button         :    "f_trigger_s",  // trigger for the calendar (button ID)
-						align          :    "Br",           // alignment
-						timeFormat     :    "24",
-						showsTime      :    true,
-						singleClick    :    true
-					});
-				</script>
+				<input type="datetime-local" name="ad_start_time" value="{AD_START_TIME}">
 			</td>
 		</tr>
 		<tr>
 			<td class="row1" align="right"><b>Дата окончания:</b></td>
 			<td class="row2">
-				<input type="text" name="ad_finish_time" id="f_date_e"  style="width:350px;" value="{AD_FINISH_TIME}">&nbsp;<img src="/misc/calendar/img.gif"  align="absmiddle" id="f_trigger_e" style="cursor: pointer; border: 0" title="Выбор даты с помощью календаря"/>
-				<script type="text/javascript">
-					var cal = Calendar.setup({
-						inputField     :    "f_date_e",     // id of the input field
-						ifFormat       :    "%Y-%m-%d %H:%M",      // format of the input field
-						button         :    "f_trigger_e",  // trigger for the calendar (button ID)
-						align          :    "Br",           // alignment
-						timeFormat     :    "24",
-						showsTime      :    true,
-						singleClick    :    true
-					});
-				</script>
+				<input type="datetime-local" name="ad_finish_time" value="{AD_FINISH_TIME}">
 			</td>
 		</tr>
 		<tr>

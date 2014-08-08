@@ -64,3 +64,27 @@ function templates_select ($default_style, $select_name = 'tpl_name')
 	$templates_select .= '</select>';
 	return ($x > 1) ? $templates_select : reset($bb_cfg['templates']);
 }
+
+//
+// Adv
+//
+function adv_select ($default_block, $select_name = 'adv')
+{
+	global $bb_cfg;
+
+	$adv_select = '<select name="'. $select_name .'">';
+	$x = 0;
+	foreach ($bb_cfg['ad_blocks'] as $type => $arrays)
+	{
+		foreach ($arrays as $block => $name)
+		{
+			var_dump($block.$name);
+			$selected = '';
+			if ($block == $default_block) $selected = ' selected="selected"';
+			$adv_select .= '<option value="'. $block .'"'. $selected .'>'. $name .'</option>';
+			$x++;
+		}
+	}
+	$adv_select .= '</select>';
+	return ($x > 1) ? $adv_select : reset($bb_cfg['ad_blocks']);
+}

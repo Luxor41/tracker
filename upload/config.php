@@ -512,11 +512,17 @@ $bb_cfg['show_ads_users'] = array(
 
 // block_type => [block_id => block_desc]
 $bb_cfg['ad_blocks'] = array(
+	// сквозные блоки
 	'trans' => array(
 		100 => 'сквозная сверху',
 	),
+	// блок для index
 	'index' => array(
 		200 => 'главная, под новостями',
+	),
+	// блок для viewforum
+	'viewforum' => array(
+		300 => 'просмотр форума, над списком тем',
 	),
 );
 

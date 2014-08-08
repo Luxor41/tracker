@@ -6,6 +6,10 @@ if (!empty($setmodules)) {
 }
 require('./pagestart.php');
 
+
+require(INC_DIR .'functions_selects.php');
+
+
 $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 $i = 0;
 
@@ -46,6 +50,7 @@ switch ($mode)
 			'LIST_ADS' => false,
 			'EDIT_ADS' => false,
 			'ADD_ADS'  => true,
+			'AD_ID' => adv_select(100, 'ad_block_ids'),
 			'S_LIST_ACTION'    => 'admin_ads.php?mode=list',
 			'DEL_ADS'       => false
 		));
