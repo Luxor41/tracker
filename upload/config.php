@@ -71,9 +71,9 @@ $domain_name = 'torrentpier.me';  // enter here your primary domain name of your
 $domain_name = (!empty($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : $domain_name;
 
 // Version info
-$bb_cfg['tp_version'] = '2.1 (RC)';
-$bb_cfg['tp_release_date'] = '30-08-2014';
-$bb_cfg['tp_release_state'] = 'R599';
+$bb_cfg['tp_version'] = '2.1 (STABLE)';
+$bb_cfg['tp_release_date'] = '01-09-2014';
+$bb_cfg['tp_release_state'] = 'R600';
 
 // Database
 $charset  = 'utf8';
@@ -81,25 +81,27 @@ $pconnect = false;
 
 // Настройка баз данных ['db']['srv_name'] => (array) srv_cfg;
 // порядок параметров srv_cfg (хост, название базы, пользователь, пароль, charset, pconnect);
-$bb_cfg['db']['db1'] = array('localhost', 'dbase', 'user', 'pass', $charset, $pconnect);
-//$bb_cfg['db']['db2'] = array('localhost2', 'dbase2', 'user2', 'pass2', $charset, $pconnect);
-//$bb_cfg['db']['db3'] = array('localhost3', 'dbase3', 'user2', 'pass3', $charset, $pconnect);
+$bb_cfg['db'] = array(
+	'db1' => array('localhost', 'dbase', 'user', 'pass', $charset, $pconnect),
+	//'db2' => array('localhost2', 'dbase2', 'user2', 'pass2', $charset, $pconnect),
+	//'db3' => array('localhost3', 'dbase3', 'user2', 'pass3', $charset, $pconnect),
+);
 
 $bb_cfg['db_alias'] = array(
 //	'alias'  => 'srv_name'
 #	db1
-	'log'    => 'db1',  // BB_LOG
-	'search' => 'db1',  // BB_TOPIC_SEARCH
-	'sres'   => 'db1',  // BB_BT_USER_SETTINGS, BB_SEARCH_RESULTS
-	'u_ses'  => 'db1',  // BB_USER_SES, BB_USER_LASTVISIT
+	'log'    => 'db1', // BB_LOG
+	'search' => 'db1', // BB_TOPIC_SEARCH
+	'sres'   => 'db1', // BB_BT_USER_SETTINGS, BB_SEARCH_RESULTS
+	'u_ses'  => 'db1', // BB_USER_SES, BB_USER_LASTVISIT
 #	db2
-	'dls'    => 'db1',  // BB_BT_DLS_*
-	'ip'     => 'db1',  // BB_POSTS_IP
-	'ut'     => 'db1',  // BB_TOPICS_USER_POSTED
+	'dls'    => 'db1', // BB_BT_DLS_*
+	'ip'     => 'db1', // BB_POSTS_IP
+	'ut'     => 'db1', // BB_TOPICS_USER_POSTED
 #	db3
-	'cap'    => 'db1',  // BB_CAPTCHA
-	'pm'     => 'db1',  // BB_PRIVMSGS, BB_PRIVMSGS_TEXT
-	'pt'     => 'db1',  // BB_POSTS_TEXT
+	'cap'    => 'db1', // BB_CAPTCHA
+	'pm'     => 'db1', // BB_PRIVMSGS, BB_PRIVMSGS_TEXT
+	'pt'     => 'db1', // BB_POSTS_TEXT
 );
 
 // Cache
@@ -121,12 +123,13 @@ $bb_cfg['cache']['redis']  = array(
 // Available cache types: memcache, sqlite, redis, eaccelerator, apc, xcache (default of filecache)
 # name => array( (string) type, (array) cfg )
 $bb_cfg['cache']['engines'] = array(
-	'bb_cache'       => array('filecache',   array()),
-	'tr_cache'       => array('filecache',   array()),
-	'session_cache'  => array('filecache',   array()),
-	'bb_cap_sid'     => array('filecache',   array()),
-	'bb_login_err'   => array('filecache',   array()),
-	'bb_poll_data'   => array('filecache',   array()),
+	'bb_cache'      => array('filecache', array()),
+	'bb_config'     => array('filecache', array()),
+	'tr_cache'      => array('filecache', array()),
+	'session_cache' => array('filecache', array()),
+	'bb_cap_sid'    => array('filecache', array()),
+	'bb_login_err'  => array('filecache', array()),
+	'bb_poll_data'  => array('filecache', array()),
 );
 // Datastore
 // Available datastore types: memcache, sqlite, redis, eaccelerator, apc, xcache  (default filecache)
@@ -148,8 +151,8 @@ $bb_cfg['js_ver']             = 1;
 $bb_cfg['css_ver']            = 1;
 
 // Backup
-$bb_cfg['db_backup_shell_cmd']     = '';           // '/path/to/db_backup.sh 2>&1'
-$bb_cfg['site_backup_shell_cmd']   = '';
+$bb_cfg['db_backup_shell_cmd']   = '';             // '/path/to/db_backup.sh 2>&1'
+$bb_cfg['site_backup_shell_cmd'] = '';
 
 // GZip
 $bb_cfg['gzip_compress']      = true;              // compress output
@@ -292,10 +295,10 @@ else
 }
 
 $bb_cfg['languages'] = array(
-//	'folder'  => 'Name',
-	'ru'      => 'Русский',
-	'uk'      => 'Український',
-	'en'      => 'English',
+//	'folder' => 'Name',
+	'ru'     => 'Русский',
+	'uk'     => 'Український',
+	'en'     => 'English',
 );
 
 // Templates
@@ -481,7 +484,8 @@ $bb_cfg['max_search_words_per_post']  = 200;
 $bb_cfg['search_min_word_len']        = 3;
 $bb_cfg['search_max_word_len']        = 35;
 $bb_cfg['limit_max_search_results']   = false;
-$bb_cfg['spam_filter_file_path']      = '';        //BB_PATH .'/misc/spam_filter_words.txt';
+$bb_cfg['spam_filter_file_path']      = '';        // BB_PATH .'/misc/spam_filter_words.txt';
+$bb_cfg['autocorrect_wkl']            = true;      // autocorrect wrong keyboard layout
 
 // Posting
 $bb_cfg['prevent_multiposting']  = true;           // replace "reply" with "edit last msg" if user (not admin or mod) is last topic poster
@@ -600,7 +604,7 @@ $banned_user_agents = array(
 $bb_cfg['trash_forum_id'] = 0; // (int) 7
 
 $bb_cfg['first_logon_redirect_url'] = 'index.php';
-$bb_cfg['terms_and_conditions_url'] = 'index.php';
+$bb_cfg['terms_and_conditions_url'] = 'terms.php';
 
 $bb_cfg['user_agreement_url']       = 'misc.php?do=info&show=user_agreement';
 $bb_cfg['copyright_holders_url']    = 'misc.php?do=info&show=copyright_holders';
