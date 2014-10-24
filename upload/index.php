@@ -412,6 +412,39 @@ if ($bb_cfg['birthday_check_day'] && $bb_cfg['birthday_enabled'])
 	));
 }
 
+if($bb_cfg['new_post'])
+{
+    $template->assign_vars(array(
+		'NEW_POST' => true,
+	));
+
+	if (!$new_post = CACHE('bb_cache')->get('new_post'))
+	{
+		$new_post = DB()->fetch_rowset('SELECT 
+		p.post_id, p.poster_id, t.topic_title, u.username, u.user_id, 
+		u.avatar_ext_id, u.user_rank, p.forum_id, p.post_time
+		FROM bb_posts p 
+		LEFT JOIN bb_topics t ON (t.topic_id = p.topic_id) 
+		LEFT JOIN bb_users u ON (u.user_id = p.poster_id) 
+		ORDER BY p.post_id DESC LIMIT 10');
+		CACHE('bb_cache')->set('new_post', $new_post, 60);
+	}
+
+	foreach ($new_post as $row)
+	{
+		
+		if((!empty($excluded_forums_csv)) ? !in_array($row['forum_id'], explode(',', $excluded_forums_csv)) : true){
+			$template->assign_block_vars('new',array(
+				'POSTING'	  => POST_URL . $row['post_id'].'#'.$row['post_id'],
+				'TOPIC_TITLE' => $row['topic_title'],
+				'POST_TOPIC'  => str_short($row['topic_title'], 32),
+				'AVATAR' 	  => get_avatar($row['user_id'], $row['avatar_ext_id']),
+				'TOPIC_TEXT'  => profile_url(array('username' => $row['username'], 'user_id' => $row['poster_id'], 'user_rank' => $row['user_rank'])).' ответил '.bb_date($row['post_time']),
+			));
+		}
+	}
+}
+
 // Allow cron
 if (IS_AM)
 {

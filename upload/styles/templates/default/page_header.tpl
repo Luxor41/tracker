@@ -444,6 +444,22 @@ $(document).ready(function() {
 					<!-- IF $bb_cfg['seed_bonus_enabled'] --><tr><td>{L_SEED_BONUS}</td><td><a href="profile.php?mode=bonus"><span class="points bold">{POINTS}</span></a></td></tr><!-- ENDIF -->
 				</table>
 			</div><!-- ENDIF -->
+			
+			<!-- IF NEW_POST -->	
+				<h3>Новые сообщения</h3>
+				<div id="new_post">
+					<ul class="newtopics_mes">
+						<!-- BEGIN new -->
+							<li>
+								<a href="{new.PROFILE}" class="avatars">{new.AVATAR}</a>
+								<a href="{new.POSTING}" title="{new.TOPIC_TITLE}" class="title">{new.POST_TOPIC}</a>
+								<div>{new.TOPIC_TEXT}</div>	
+							</li>
+						<!-- END new -->
+					</ul>
+				</div>
+			<!-- ENDIF -->
+			
 			<!-- IF HTML_SIDEBAR_1 -->
 				<?php include($V['HTML_SIDEBAR_1']); ?>
 			<!-- ENDIF -->

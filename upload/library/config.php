@@ -629,3 +629,5 @@ if (file_exists(BB_ROOT. '/library/config.local.php'))
 }
 
 define('BB_CFG_LOADED', true);
+
+$bb_cfg['new_post'] = true;
