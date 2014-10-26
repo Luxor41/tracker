@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Script versions
  * Domain name
  * Version info
  * Database
@@ -12,9 +13,9 @@
    - Datastore
  * Server
    - Cloudflare
-   - Script versions
    - GZip
  * Tracker
+ * Ocelot
  * FAQ url
  * Torrents
    - Ratio limits
@@ -64,13 +65,16 @@ if (!defined('BB_ROOT')) die(basename(__FILE__));
 
 $bb_cfg = $tr_cfg = $page_cfg = array();
 
+// Increase number after changing js or css
+$bb_cfg['js_ver'] = $bb_cfg['css_ver'] = 1;
+
 // Primary domain name
 $domain_name = 'torrentpier.me'; // enter here your primary domain name of your site
 $domain_name = (!empty($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : $domain_name;
 
 // Version info
-$bb_cfg['tp_version'] = '2.1.2';
-$bb_cfg['tp_release_date'] = '27-09-2014';
+$bb_cfg['tp_version'] = '2.1.3';
+$bb_cfg['tp_release_date'] = '24-10-2014';
 $bb_cfg['tp_release_state'] = 'ALPHA';
 
 // Database
@@ -105,7 +109,7 @@ $bb_cfg['db_alias'] = array(
 // Cache
 $bb_cfg['cache']['pconnect'] = true;
 $bb_cfg['cache']['db_dir']   = realpath(BB_ROOT) .'/internal_data/cache/filecache/';
-$bb_cfg['cache']['prefix']   = 'tp_';  // Префикс кеша 'tp_2'
+$bb_cfg['cache']['prefix']   = 'tp_';  // Префикс кеша ('tp_')
 $bb_cfg['cache']['memcache'] = array(
 	'host'         => '127.0.0.1',
 	'port'         => 11211,
@@ -144,9 +148,6 @@ if (isset($_SERVER['HTTP_CF_CONNECTING_IP']))
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 }
 
-// Increase number after changing js or css
-$bb_cfg['js_ver'] = $bb_cfg['css_ver'] = 1;
-
 // GZip
 $bb_cfg['gzip_compress']      = true;              // compress output
 
@@ -156,6 +157,16 @@ $bb_cfg['passkey_key']        = 'uk';              // Passkey key name in GET re
 $bb_cfg['ignore_reported_ip'] = false;             // Ignore IP reported by client
 $bb_cfg['verify_reported_ip'] = true;              // Verify IP reported by client against $_SERVER['HTTP_X_FORWARDED_FOR']
 $bb_cfg['allow_internal_ip']  = false;             // Allow internal IP (10.xx.. etc.)
+
+// Ocelot
+$bb_cfg['ocelot'] = array(
+	'enabled' => false,
+	'host'    => $domain_name,
+	'port'    => 34000,
+	'url'     => "http://$domain_name:34000/", // with '/'
+	'secret'  => 'some_10_chars',              // 10 chars
+	'stats'   => 'some_10_chars',              // 10 chars
+);
 
 // FAQ url help link
 $bb_cfg['how_to_download_url_help']  = 'viewtopic.php?t=1'; // Как скачивать?
@@ -198,7 +209,7 @@ $bb_cfg['show_tor_info_in_dl_list'] = true;
 $bb_cfg['allow_dl_list_names_mode'] = true;
 
 $bb_cfg['torrent_name_style'] = true; // use torrent name style [yoursite.com].txxx.torrent
-$bb_cfg['tor_help_links']     = '';
+$bb_cfg['tor_help_links']     = 'terms.php';
 
 // Сколько дней сохранять торрент зарегистрированным / Days to keep torrent registered, if:
 $bb_cfg['seeder_last_seen_days_keep']  = 0; // сколько дней назад был сид последний раз
@@ -238,21 +249,24 @@ $page_cfg['show_torhelp'] = array(
 );
 
 // Path (trailing slash '/' at the end: XX_PATH - without, XX_DIR - with)
-define('BB_PATH',       realpath(BB_ROOT)                   );
-define('ADMIN_DIR',     BB_PATH .'/admin/'                  );
-define('DATA_DIR',      BB_PATH .'/data/'                   );
-define('INT_DATA_DIR',  BB_PATH .'/internal_data/'          );
-define('AJAX_HTML_DIR', BB_ROOT .'/internal_data/ajax_html/');
-define('CACHE_DIR',     BB_PATH .'/internal_data/cache/'    );
-define('LOG_DIR',       BB_PATH .'/internal_data/log/'      );
-define('SITEMAP_DIR',   BB_PATH .'/internal_data/sitemap/'  );
-define('TRIGGERS_DIR',  BB_PATH .'/internal_data/triggers/' );
-define('AJAX_DIR',      BB_ROOT .'/library/ajax/'           );
-define('ATTACH_DIR',    BB_PATH .'/library/attach_mod/'     );
-define('CFG_DIR',       BB_PATH .'/library/config/'         );
-define('INC_DIR',       BB_PATH .'/library/includes/'       );
-define('LANG_ROOT_DIR', BB_PATH .'/library/language/'       );
-define('TEMPLATES_DIR', BB_PATH .'/styles/templates/'       );
+define('BB_PATH',       realpath(BB_ROOT)                    );
+define('ADMIN_DIR',     BB_PATH .'/admin/'                   );
+define('DATA_DIR',      BB_PATH .'/data/'                    );
+define('INT_DATA_DIR',  BB_PATH .'/internal_data/'           );
+define('AJAX_HTML_DIR', BB_ROOT .'/internal_data/ajax_html/' );
+define('CACHE_DIR',     BB_PATH .'/internal_data/cache/'     );
+define('LOG_DIR',       BB_PATH .'/internal_data/log/'       );
+define('SITEMAP_DIR',   BB_PATH .'/internal_data/sitemap/'   );
+define('TRIGGERS_DIR',  BB_PATH .'/internal_data/triggers/'  );
+define('AJAX_DIR',      BB_ROOT .'/library/ajax/'            );
+define('ATTACH_DIR',    BB_PATH .'/library/attach_mod/'      );
+define('CFG_DIR',       BB_PATH .'/library/config/'          );
+define('INC_DIR',       BB_PATH .'/library/includes/'        );
+define('CLASS_DIR',     BB_PATH .'/library/includes/classes/');
+define('UCP_DIR',       BB_PATH .'/library/includes/ucp/'    );
+define('LANG_ROOT_DIR', BB_PATH .'/library/language/'        );
+define('IMAGES_DIR',    BB_PATH .'/styles/images/'           );
+define('TEMPLATES_DIR', BB_PATH .'/styles/templates/'        );
 
 // URL's
 $bb_cfg['ajax_url']    = 'ajax.php';     #  "http://{$_SERVER['SERVER_NAME']}/ajax.php"
@@ -344,12 +358,14 @@ $bb_cfg['reg_email_activation']    = false;        // Требовать акт�
 // Email
 $bb_cfg['emailer_disabled']        = false;
 
-$bb_cfg['smtp_delivery']           = false; // set true if you want or have to send email via a named server instead of the local mail function
+$bb_cfg['smtp_delivery']           = false; // send email via a named server instead of the local mail function
+$bb_cfg['smtp_ssl']                = false; // use ssl connect
 $bb_cfg['smtp_host']               = '';    // SMTP server host
-$bb_cfg['smtp_password']           = '';    // enter a password if your SMTP server requires it
+$bb_cfg['smtp_port']               = 25;    // SMTP server port
 $bb_cfg['smtp_username']           = '';    // enter a username if your SMTP server requires it
+$bb_cfg['smtp_password']           = '';    // enter a password if your SMTP server requires it
 
-$bb_cfg['board_email']             = 'noreply@' . $domain_name; // admin email address
+$bb_cfg['board_email']             = "noreply@$domain_name"; // admin email address
 $bb_cfg['board_email_form']        = false;        // can users send email to each other via board
 $bb_cfg['board_email_sig']         = '';           // this text will be attached to all emails the board sends
 $bb_cfg['board_email_sitename']    = $domain_name; // sitename used in all emails header
@@ -359,9 +375,9 @@ $bb_cfg['pm_notify_enabled']       = true;
 $bb_cfg['group_send_email']        = true;
 $bb_cfg['email_change_disabled']   = false;        // disable changing email by user
 
-$bb_cfg['tech_admin_email']        = 'admin@' . $domain_name;  // email for sending error reports
-$bb_cfg['abuse_email']             = 'abuse@' . $domain_name;
-$bb_cfg['adv_email']               = 'adv@'   . $domain_name;
+$bb_cfg['tech_admin_email']        = "admin@$domain_name"; // email for sending error reports
+$bb_cfg['abuse_email']             = "abuse@$domain_name";
+$bb_cfg['adv_email']               = "adv@$domain_name";
 
 // Debug
 define('DBG_LOG',              false);    // enable forum debug (off on production)
@@ -558,7 +574,7 @@ $bb_cfg['avatars'] = array(
 // Group avatars
 $bb_cfg['group_avatars'] = array(
 	'allowed_ext' => array('gif','jpg','jpeg','png'), // разрешенные форматы файлов
-	'max_size'    => 100*1024,                        // размер аватары в байтах
+	'max_size'    => 300*1024,                        // размер аватары в байтах
 	'max_height'  => 300,                             // высота аватара в px
 	'max_width'   => 300,                             // ширина аватара в px
 	'no_avatar'   => 'gallery/noavatar.png',          // дефолтная аватара
